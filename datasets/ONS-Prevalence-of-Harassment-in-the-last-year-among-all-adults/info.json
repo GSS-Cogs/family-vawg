@@ -1,0 +1,26 @@
+{
+    "id": "ons-prevalence-of-harassment-in-the-last-year-among-all-adults",
+    "title": "Prevalence of Harassment in the last year among all adults",
+    "publisher": "International trade in services by subnational areas of the UK: 2018",
+    "description": "Data from the Opinions and Lifestyle Survey (OPN) on perceptions of personal safety in different settings, by personal characteristics, collected between 16 February to 13 March 2022. Also contains data on experiences of harassment in the previous 12 months.",
+    "landingPage": "https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/datasets/perceptionsofpersonalsafetyandexperiencesofharassmentgreatbritain",
+    "datasetNotes": [
+        "Data on landing page"
+    ],
+    "published": "",
+    "families": [
+        "vawg"
+    ],
+    "extract": {
+        "source": "XLS",
+        "stage": "Documented"
+    },
+    "transform": {
+        "stage": [
+            "To Do"
+        ],
+        "airtable": "recMs1l8flUxUfkIU"
+    },
+    "sizingNotes": "",
+    "notes": "The relevant data is table 3a"
+}

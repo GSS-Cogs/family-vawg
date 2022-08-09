@@ -1,0 +1,26 @@
+{
+    "id": "ons-prevalence-of-domestic-abuse-in-the-last-year-among-adults-aged-16-to-59-by-type-of-abuse-and-sex",
+    "title": "Prevalence of Domestic Abuse in the Last Year Among Adults Aged 16 to 59, by Type of Abuse and Sex",
+    "publisher": "ONS",
+    "description": "Domestic abuse numbers, prevalence, types and victim characteristics, based upon findings from the Crime Survey for England and Wales and police recorded crime.",
+    "landingPage": "https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/datasets/domesticabuseprevalenceandvictimcharacteristicsappendixtables",
+    "datasetNotes": [
+        "Data available on previous (2020) version on drop down, NOT the latest version"
+    ],
+    "published": "",
+    "families": [
+        "vawg"
+    ],
+    "extract": {
+        "source": "XLS",
+        "stage": "Documented"
+    },
+    "transform": {
+        "stage": [
+            "To Do"
+        ],
+        "airtable": "recbaH351X9jfKONd"
+    },
+    "sizingNotes": "",
+    "notes": "The relevant data is tables 3b and 4b, to be combined into one dataset, available in the previous 2020 version ONLY, not the newer 2021 one"
+}

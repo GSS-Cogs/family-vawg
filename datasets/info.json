@@ -1,0 +1,9 @@
+{
+    "family": "vawg",
+    "pipelines": [
+        "ONS-Partner-Abuse-In-Detail",
+        "ONS-Prevalence-of-Domestic-Abuse-in-the-Last-Year-Among-Adults-Aged-16-to-59-by-Type-of-Abuse-and-Sex",
+        "ONS-Prevalence-of-Harassment-in-the-last-year-among-all-adults",
+        "ONS-Prevalence-of-sexual-assault-in-the-last-year-among-adults-aged-16-to-59-by-type-of-sexual-assault-and-sex"
+    ]
+}
