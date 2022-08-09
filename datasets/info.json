@@ -1,6 +1,6 @@
 {
     "$schema": "https://gss-cogs.github.io/family-schemas/pipelines-schema.json",
-    "family": "VAWG",
+    "family": "vawg",
     "github": "https://github.com/GSS-Cogs/family-vawg",
     "jenkins": {
         "base": "https://ci.floop.org.uk",
