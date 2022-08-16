@@ -37,10 +37,7 @@
                 "value": "http://statistics.data.gov.uk/id/statistical-geography/{region}"
             },
             "Partner Abuse": {
-                "type": "dimension",
-                "new": {
-                    "codelist": "./codelists/partner-abuse.csv-metadata.json"
-                }
+                "type": "dimension"
             },
             "Sex": {
                 "type": "dimension",
