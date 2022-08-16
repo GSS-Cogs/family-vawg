@@ -90,7 +90,7 @@ df['Measure Type'] = df.apply(lambda x: 'unweighted count' if 'number of adults'
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Partner Abuse'] else x['Unit'], axis = 1)
 
 df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'},
-                 'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'w'}})
+                 'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'}})
 
 df['Region'] = 'K04000001'
 
