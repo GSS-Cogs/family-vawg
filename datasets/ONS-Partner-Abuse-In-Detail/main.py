@@ -69,7 +69,7 @@ for tab in tabs:
 df
 
 
-# In[22]:
+# In[28]:
 
 
 df = pd.concat(tidied_sheets)
@@ -91,6 +91,8 @@ df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Partner Abus
 
 df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'},
                  'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'}})
+
+df['Age Group'] = df['Age Group'].apply(pathify)
 
 df['Region'] = 'K04000001'
 
