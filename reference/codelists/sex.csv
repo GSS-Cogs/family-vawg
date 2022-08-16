@@ -1,0 +1,6 @@
+Label,Notation,Parent Notation,Sort Priority,Description
+All,t,,0,
+Male,m,t,1,
+Female,f,t,2,
+Other,other,t,3,
+Not Known,not-known,t,4,

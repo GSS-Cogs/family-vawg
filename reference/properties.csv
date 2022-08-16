@@ -1,0 +1,4 @@
+Namespace,Label,Path,Qb Property Type,Parent Property,Source,Range,Codelist,Comment
+vawg,Sex,dimension/sex,qb:DimensionProperty,,,skos:Concept,http://gss-data.org.uk/def/vawg/concept-scheme/sex,
+vawg,Age Group,dimension/age-group,qb:DimensionProperty,,,skos:Concept,http://gss-data.org.uk/def/vawg/concept-scheme/age-group,
+,,,,,,,,

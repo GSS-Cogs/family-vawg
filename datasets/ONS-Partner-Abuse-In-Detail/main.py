@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[17]:
 
 
 from gssutils import *
 
 
-# In[2]:
+# In[18]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[3]:
+# In[19]:
 
 
 for i in scraper.distributions:
@@ -22,7 +22,7 @@ for i in scraper.distributions:
     print(i.issued)
 
 
-# In[4]:
+# In[20]:
 
 
 tabs = { tab: tab for tab in scraper.distributions[0].as_databaker() if tab.name in ['Table 12']}
@@ -31,7 +31,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[12]:
+# In[21]:
 
 
 tidied_sheets = []
@@ -69,7 +69,7 @@ for tab in tabs:
 df
 
 
-# In[23]:
+# In[22]:
 
 
 df = pd.concat(tidied_sheets)
@@ -89,7 +89,8 @@ df['Unit'] = 'percent'
 df['Measure Type'] = df.apply(lambda x: 'unweighted count' if 'number of adults' in x['Partner Abuse'] else x['Measure Type'], axis = 1)
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Partner Abuse'] else x['Unit'], axis = 1)
 
-df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'}})
+df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'},
+                 'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'w'}})
 
 df['Region'] = 'K04000001'
 
@@ -98,7 +99,7 @@ df = df[['Period', 'Region', 'Sex', 'Age Group', 'Partner Abuse', 'Value', 'Meas
 df
 
 
-# In[24]:
+# In[23]:
 
 
 from IPython.core.display import HTML
@@ -109,7 +110,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[25]:
+# In[24]:
 
 
 notes = """This question was asked of abuse experienced in the last 12 months. Due to changes in questionnaire structure, estimates on these questions are not comparable with data prior to year ending March 2011. Unweighted base refers to question on whether victim told someone known personally. Other bases are similar."""

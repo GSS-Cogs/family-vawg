@@ -36,23 +36,21 @@
                 "uri": "http://purl.org/linked-data/sdmx/2009/dimension#refArea",
                 "value": "http://statistics.data.gov.uk/id/statistical-geography/{region}"
             },
-            "Sex": {
-                "type": "dimension",
-                "new": {
-                  "codelist": "./codelists/sex.csv-metadata.json"
-                }
-            },
-            "Age Group": {
-                "type": "dimension",
-                "new": {
-                  "codelist": "./codelists/age-group.csv-metadata.json"
-                }
-            },
             "Partner Abuse": {
                 "type": "dimension",
                 "new": {
-                  "codelist": "./codelists/partner-abuse.csv-metadata.json"
+                    "codelist": "./codelists/partner-abuse.csv-metadata.json"
                 }
+            },
+            "Sex": {
+                "type": "dimension",
+                "uri": "http://gss-data.org.uk/def/vawg/property/dimension/sex",
+                "value": "http://gss-data.org.uk/def/vawg/concept/sex/{+sex}"
+            },
+            "Age Group": {
+                "type": "dimension",
+                "uri": "http://gss-data.org.uk/def/vawg/property/dimension/age-group",
+                "value": "http://gss-data.org.uk/def/vawg/concept/age-group/{+age_group}"
             },
             "Value": {
                 "type": "observations",
