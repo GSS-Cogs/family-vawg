@@ -86,7 +86,7 @@ df['Age Group'] = df.apply(lambda x: ' '.join(x['Age Group'][:-1].split()[2:]) i
 df['Measure Type'] = 'percentage'
 df['Unit'] = 'percent'
 
-df['Measure Type'] = df.apply(lambda x: 'unweighted count' if 'number of adults' in x['Partner Abuse'] else x['Measure Type'], axis = 1)
+df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults' in x['Partner Abuse'] else x['Measure Type'], axis = 1)
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Partner Abuse'] else x['Unit'], axis = 1)
 
 df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'},
