@@ -38,21 +38,16 @@
             },
             "Sex": {
                 "type": "dimension",
-                "new": {
-                  "codelist": "./codelists/sex.csv-metadata.json"
-                }
+                "uri": "http://gss-data.org.uk/def/vawg/property/dimension/sex",
+                "value": "http://gss-data.org.uk/def/vawg/concept/sex/{+sex}"
             },
             "Age Group": {
                 "type": "dimension",
-                "new": {
-                  "codelist": "./codelists/age-group.csv-metadata.json"
-                }
+                "uri": "http://gss-data.org.uk/def/vawg/property/dimension/age-group",
+                "value": "http://gss-data.org.uk/def/vawg/concept/age-group/{+age_group}"
             },
             "Type of Domestic Abuse": {
-                "type": "dimension",
-                "new": {
-                  "codelist": "./codelists/type-of-domestic-abuse.csv-metadata.json"
-                }
+                "type": "dimension"
             },
             "Value": {
                 "type": "observations",

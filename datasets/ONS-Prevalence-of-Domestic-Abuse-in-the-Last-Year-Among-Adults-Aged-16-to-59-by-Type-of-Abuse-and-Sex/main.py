@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[24]:
+# In[17]:
 
 
 from gssutils import *
 
 
-# In[25]:
+# In[18]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[26]:
+# In[19]:
 
 
 for i in scraper.distributions:
@@ -25,7 +25,7 @@ for i in scraper.distributions:
 #we want the 2020 dataset
 
 
-# In[27]:
+# In[20]:
 
 
 tabs = { tab: tab for tab in dist.as_databaker() if tab.name in ['Table 3b', 'Table 4b']}
@@ -34,7 +34,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[28]:
+# In[21]:
 
 
 tidied_sheets = []
@@ -100,7 +100,7 @@ for tab in tabs:
 df
 
 
-# In[29]:
+# In[22]:
 
 
 df = pd.concat(tidied_sheets)
@@ -119,11 +119,14 @@ df['Age Group'] = df.apply(lambda x: ' '.join(x['Age Group'][:-1].split()[2:]) i
 df['Measure Type'] = 'percentage'
 df['Unit'] = 'percent'
 
-df['Measure Type'] = df.apply(lambda x: 'unweighted count' if 'number of adults' in x['Type of Domestic Abuse'] else x['Measure Type'], axis = 1)
+df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults' in x['Type of Domestic Abuse'] else x['Measure Type'], axis = 1)
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Type of Domestic Abuse'] else x['Unit'], axis = 1)
 
 df = df.replace({'DATAMARKER' : {':' : 'not-applicable'},
-                 'Type of Domestic Abuse' : {'Unweighted base number of adults' : 'All'}})
+                 'Type of Domestic Abuse' : {'Unweighted base number of adults' : 'All'},
+                 'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'}})
+
+df['Age Group'] = df['Age Group'].apply(pathify)
 
 df = df.rename(columns={'DATAMARKER' : 'Marker', 'OBS' : 'Value'})
 
@@ -136,7 +139,7 @@ df = df[['Period', 'Region', 'Sex', 'Age Group', 'Type of Domestic Abuse', 'Valu
 df
 
 
-# In[30]:
+# In[23]:
 
 
 from IPython.core.display import HTML
@@ -147,7 +150,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[31]:
+# In[24]:
 
 
 notes = """New questions were introduced into the survey from the year ending March 2013, and estimates from this year onwards are calculated using these new questions. Estimates for earlier years are calculated from the original questions with an adjustment applied to make them comparable to the new questions. From April 2017, the upper age limit for the self-completion module was increased to ask all respondents aged 16 to 74. Figures for 16 to 59 year olds only are presented in this table to allow comparisons to be made over a longer time period. A small change to the weighting procedure was made in 2019. This change is being applied going forward and was incorporated into all historic datasets. The effect of this change will only have a negligible impact on the estimates in this table and therefore historic data have not been re-calculated using the new weights, except for the year ending March 2018, where direct comparisons were previously made to the year ending March 2019. Estimates for the year ending March 2005 could not be re-calculated due to a manual adjustment which was applied to make the data comparable with the year ending 2013 onwards. More information can be found in footnote 3.	No data is available for the year ending March 2008 because comparable questions on any domestic abuse, any partner abuse and any family abuse were not included in that year. The sample size is lower for the years ending March 2011, March 2012 and March 2013 than for other years due to use of a split-sample experiment in these years. The sample size is lower for the years ending March 2018 and March 2019 due to use of a split-sample experiment. The sum of the overarching domestic abuse categories is not the sum of the sub-categories as some victims may be included in multiple categories as they can experience more than one type of abuse. The bases given are for any domestic abuse except for year ending March 2008 which is for partner abuse (non-sexual); the bases for the other measures presented will be similar."""
