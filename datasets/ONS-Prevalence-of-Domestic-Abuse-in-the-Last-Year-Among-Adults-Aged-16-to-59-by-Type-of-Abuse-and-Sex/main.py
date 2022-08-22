@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[25]:
+# In[108]:
 
 
 from gssutils import *
 
 
-# In[26]:
+# In[109]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[27]:
+# In[110]:
 
 
 for i in scraper.distributions:
@@ -25,7 +25,7 @@ for i in scraper.distributions:
 #we want the 2020 dataset
 
 
-# In[28]:
+# In[111]:
 
 
 tabs = { tab: tab for tab in dist.as_databaker() if tab.name in ['Table 3b', 'Table 4b']}
@@ -34,7 +34,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[29]:
+# In[112]:
 
 
 tidied_sheets = []
@@ -55,6 +55,8 @@ for tab in tabs:
 
         assualt = pivot.shift(0, 5).expand(DOWN).is_not_blank() - remove
 
+        disambiguation  = tab.filter(contains_string('non-sexual')) | tab.filter(contains_string('Any'))
+
         observations = (tab.filter(contains_string('Source:')).shift(UP).fill(RIGHT).is_not_blank().expand(UP) - period.shift(DOWN).expand(UP)).is_not_blank()
 
         dimensions = [
@@ -62,6 +64,7 @@ for tab in tabs:
             HDim(sex, 'Sex', CLOSEST, LEFT),
             HDim(assualt, 'Type of Domestic Abuse', DIRECTLY, LEFT),
             HDim(agegroup, 'Age Group', CLOSEST, ABOVE),
+            HDim(disambiguation, 'Disambiguation', CLOSEST, ABOVE)
             ]
         tidy_sheet = ConversionSegment(tab, dimensions, observations)
         savepreviewhtml(tidy_sheet, fname=tab.name + " Preview.html")
@@ -82,13 +85,16 @@ for tab in tabs:
 
         assualt = pivot.shift(0, 4).expand(DOWN).is_not_blank() - remove
 
+        disambiguation  = tab.filter(contains_string('non-sexual')) | tab.filter(contains_string('Any'))
+
         observations = (tab.filter(contains_string('Source:')).shift(UP).fill(RIGHT).is_not_blank().expand(UP) - period.shift(DOWN).expand(UP)).is_not_blank()
 
         dimensions = [
             HDim(period, 'Period', DIRECTLY, ABOVE),
             HDim(agegroup, 'Age Group', CLOSEST, ABOVE),
             HDim(assualt, 'Type of Domestic Abuse', DIRECTLY, LEFT),
-            HDimConst("Sex", 'All')
+            HDimConst("Sex", 'All'),
+            HDim(disambiguation, 'Disambiguation', CLOSEST, ABOVE)
             ]
         tidy_sheet = ConversionSegment(tab, dimensions, observations)
         savepreviewhtml(tidy_sheet, fname=tab.name + " Preview.html")
@@ -100,7 +106,7 @@ for tab in tabs:
 df
 
 
-# In[30]:
+# In[113]:
 
 
 df = pd.concat(tidied_sheets)
@@ -123,24 +129,30 @@ df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults'
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Type of Domestic Abuse'] else x['Unit'], axis = 1)
 
 df = df.replace({'DATAMARKER' : {':' : 'not-applicable'},
-                 'Type of Domestic Abuse' : {'Unweighted base number of adults' : 'All'},
+                 'Type of Domestic Abuse' : {'Unweighted base - number of adults' : 'All',
+                                             'Sexual assault by rape or penetration (including attempts)  by a partner' : 'Sexual assault by rape or penetration (including attempts) by a partner'},
                  'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'},
-                 'Type of Domestic Abuse' : {'Sexual assault by rape or penetration (including attempts)  by a partner' : 'Sexual assault by rape or penetration (including attempts) by a partner'}})
+                 'Domestic Abuse Category' : {'Unweighted base - number of adults' : 'All'}})
 
 df['Age Group'] = df['Age Group'].apply(pathify)
 
-df = df.rename(columns={'DATAMARKER' : 'Marker', 'OBS' : 'Value'})
+df = df.rename(columns={'DATAMARKER' : 'Marker', 'OBS' : 'Value', 'Disambiguation' : 'Domestic Abuse Category'})
+
+df['Type of Domestic Abuse'] = df.apply(lambda x: 'All' if x['Type of Domestic Abuse'] == x['Domestic Abuse Category'] else x['Type of Domestic Abuse'], axis = 1)
 
 df['Value'] = df.apply(lambda x: 0 if x['Marker'] == 'not-applicable' else x['Value'], axis = 1)
 
 df['Region'] = 'K04000001'
 
-df = df[['Period', 'Region', 'Sex', 'Age Group', 'Type of Domestic Abuse', 'Value', 'Marker', 'Measure Type', 'Unit']]
+df['Domestic Abuse Category'] = df['Domestic Abuse Category'].apply(pathify)
+df['Type of Domestic Abuse'] = df['Type of Domestic Abuse'].apply(pathify)
+
+df = df[['Period', 'Region', 'Sex', 'Age Group', 'Domestic Abuse Category', 'Type of Domestic Abuse', 'Value', 'Marker', 'Measure Type', 'Unit']]
 
 df
 
 
-# In[31]:
+# In[114]:
 
 
 from IPython.core.display import HTML
@@ -151,7 +163,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[32]:
+# In[115]:
 
 
 notes = """New questions were introduced into the survey from the year ending March 2013, and estimates from this year onwards are calculated using these new questions. Estimates for earlier years are calculated from the original questions with an adjustment applied to make them comparable to the new questions. From April 2017, the upper age limit for the self-completion module was increased to ask all respondents aged 16 to 74. Figures for 16 to 59 year olds only are presented in this table to allow comparisons to be made over a longer time period. A small change to the weighting procedure was made in 2019. This change is being applied going forward and was incorporated into all historic datasets. The effect of this change will only have a negligible impact on the estimates in this table and therefore historic data have not been re-calculated using the new weights, except for the year ending March 2018, where direct comparisons were previously made to the year ending March 2019. Estimates for the year ending March 2005 could not be re-calculated due to a manual adjustment which was applied to make the data comparable with the year ending 2013 onwards. More information can be found in footnote 3.	No data is available for the year ending March 2008 because comparable questions on any domestic abuse, any partner abuse and any family abuse were not included in that year. The sample size is lower for the years ending March 2011, March 2012 and March 2013 than for other years due to use of a split-sample experiment in these years. The sample size is lower for the years ending March 2018 and March 2019 due to use of a split-sample experiment. The sum of the overarching domestic abuse categories is not the sum of the sub-categories as some victims may be included in multiple categories as they can experience more than one type of abuse. The bases given are for any domestic abuse except for year ending March 2008 which is for partner abuse (non-sexual); the bases for the other measures presented will be similar."""

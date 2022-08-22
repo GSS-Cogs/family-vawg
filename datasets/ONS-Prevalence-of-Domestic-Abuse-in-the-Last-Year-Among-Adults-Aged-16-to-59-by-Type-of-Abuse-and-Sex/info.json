@@ -46,8 +46,17 @@
                 "uri": "http://gss-data.org.uk/def/vawg/property/dimension/age-group",
                 "value": "http://gss-data.org.uk/def/vawg/concept/age-group/{+age_group}"
             },
+            "Domestic Abuse Category": {
+                "type": "dimension",
+                "new": {
+                  "codelist": "./codelists/type-of-domestic-abuse.csv-metadata.json"
+                }
+            },
             "Type of Domestic Abuse": {
-                "type": "dimension"
+                "type": "dimension",
+                "new": {
+                  "codelist": "./codelists/type-of-domestic-abuse.csv-metadata.json"
+                }
             },
             "Value": {
                 "type": "observations",
