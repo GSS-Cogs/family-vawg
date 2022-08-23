@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[25]:
 
 
 from gssutils import *
 from datetime import date
 
 
-# In[12]:
+# In[26]:
 
 
 def cell_to_string(cell):
@@ -32,14 +32,14 @@ months = {'January' : '01',
           'December' : '12'}
 
 
-# In[13]:
+# In[27]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[14]:
+# In[28]:
 
 
 for i in scraper.distributions:
@@ -47,7 +47,7 @@ for i in scraper.distributions:
     print(i.issued)
 
 
-# In[15]:
+# In[29]:
 
 
 tabs = { tab: tab for tab in scraper.distributions[0].as_databaker() if '3a' in tab.name}
@@ -55,7 +55,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[16]:
+# In[ ]:
 
 
 tidied_sheets = []
@@ -102,7 +102,7 @@ for tab in tabs:
     tidied_sheets.append(tidy_sheet.topandas())
 
 
-# In[23]:
+# In[32]:
 
 
 df = pd.concat(tidied_sheets)
@@ -169,8 +169,6 @@ df = df.drop(['Period Range', 'Age and sex'], axis = 1)
 df['Value'] = df.apply(lambda x: 0 if '[c]' in x['Marker'] else x['Value'], axis = 1)
 df['Marker'] = df.apply(lambda x: '[s]' if '[' in x['Change'] else x['Marker'], axis = 1)
 
-df = df.rename(columns={'Change' : 'Change Marker'})
-
 df = df.replace('', 'All')
 df = df.replace('N/A' , '')
 
@@ -187,11 +185,13 @@ df = df.replace({'Region' : {'Great Britain' : 'K03000001',
                              'Scotland' : 'S92000003',
                              'Wales' : 'W92000004'},
                  'Harassment' : {'Unweighted base - number of adults' : 'All'},
-                 'Marker' : {'' : 'N/A'},
-                 'Change' : {'' : 'N/A'},
+                 'Marker' : {'' : 'N/A', '[c]' : 'suppressed', '[s]' : 'significant-change'},
+                 'Change' : {'' : 'N/A', '[i]' : 'increase', '[d]' : 'decrease', '[z]' : 'not-applicable'},
                  'Sex' : {'ALL ADULTS' : 't', 'All' : 't', 'Male' : 'm', 'Female' : 'f'}})
 
 df['Age Group'] = df['Age Group'].apply(pathify)
+
+df = df.rename(columns={'Change' : 'Change Marker'})
 
 df = df[['Period', 'Region', 'Harassment', 'Sex', 'Age Group', 'Disability', 'Deprivation', 'Ethnic Group', 'Value', 'Marker', 'Change Marker', 'Measure Type', 'Unit']]
 
@@ -200,7 +200,7 @@ df = df[df['Measure Type'].str.contains("All")==False]
 df
 
 
-# In[24]:
+# In[33]:
 
 
 from IPython.core.display import HTML
@@ -211,14 +211,14 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[19]:
+# In[ ]:
 
 
 for i in df['Age Group'].unique().tolist():
     print(i)
 
 
-# In[20]:
+# In[ ]:
 
 
 notes = """Please note percentages may not sum to 100% due to rounding. There are cases in which respondents do not answer a specific question. Where this happens, they have been excluded from the analysis. As a result, the unweighted bases for some categories may not sum to the total. Percentages may not sum to 100% as respondents could select multiple response options. [c] indicates where individual estimates have been suppressed on quality grounds and to avoid disclosure issues. Figures are based on a small number of respondents (< 3). [s] indicates there is a statistically significant change at the 5% level, [d]  a statistical decrease and [i] a statistical increase. [z] indicates not applicable as significant testing not possible. """
