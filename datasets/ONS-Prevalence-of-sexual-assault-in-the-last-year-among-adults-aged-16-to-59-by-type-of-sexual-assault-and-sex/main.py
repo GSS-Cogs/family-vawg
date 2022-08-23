@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[10]:
+# In[19]:
 
 
 from gssutils import *
 
 
-# In[11]:
+# In[20]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[12]:
+# In[21]:
 
 
 for i in scraper.distributions:
@@ -22,7 +22,7 @@ for i in scraper.distributions:
     print(i.issued)
 
 
-# In[13]:
+# In[22]:
 
 
 tabs = { tab: tab for tab in scraper.distributions[0].as_databaker() if tab.name in ['Table 3b', 'Table 4b']}
@@ -30,7 +30,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[14]:
+# In[23]:
 
 
 tidied_sheets = []
@@ -98,7 +98,7 @@ for tab in tabs:
 df
 
 
-# In[15]:
+# In[24]:
 
 
 df = pd.concat(tidied_sheets)
@@ -121,11 +121,12 @@ df['Age Group'] = df.apply(lambda x: ' '.join(x['Age Group'][:-1].split()[2:]) i
 df['Measure Type'] = 'percentage'
 df['Unit'] = 'percent'
 
-df['Measure Type'] = df.apply(lambda x: 'unweighted count' if 'number of adults' in x['Type of Sexual Assault'] else x['Measure Type'], axis = 1)
+df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults' in x['Type of Sexual Assault'] else x['Measure Type'], axis = 1)
 df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Type of Sexual Assault'] else x['Unit'], axis = 1)
 
 df = df.replace({'DATAMARKER' : {':' : 'not-applicable'},
-                 'Type of Sexual Assault' : {'Unweighted base number of adults' : 'All'}})
+                 'Type of Sexual Assault' : {'Unweighted base number of adults' : 'All'},
+                 'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'}})
 
 df = df.rename(columns={'DATAMARKER' : 'Marker', 'OBS' : 'Value'})
 
@@ -133,12 +134,15 @@ df['Value'] = df.apply(lambda x: 0 if x['Marker'] == 'not-applicable' else x['Va
 
 df['Region'] = 'K04000001'
 
+
+df['Age Group'] = df['Age Group'].apply(pathify)
+
 df = df[['Period', 'Region', 'Sex', 'Age Group', 'Type of Sexual Assault', 'Value', 'Marker', 'Measure Type', 'Unit']]
 
 df
 
 
-# In[16]:
+# In[25]:
 
 
 from IPython.core.display import HTML
@@ -149,7 +153,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[17]:
+# In[26]:
 
 
 notes = """From April 2017, the upper age limit for the self-completion module has been increased to ask all respondents aged 16 to 74. Figures for 16 to 59 year olds only are presented in this table to allow comparisons to be made over a longer time period. The sample size is lower from year ending March 2011 to year ending March 2013 due to use of a split-sample experiment. The accompanying methodological note provides further information. The sample size is lower for year ending March 2018 and March 2019 due to use of a split-sample experiment. From the year ending March 2013, estimates of indecent exposure and unwanted touching are split out into separate categories. Previous combined estimates are still provided to make them comparable to earlier years. Estimates are calculated from the new questions from year ending March 2013 onwards. Previous estimates are calculated from the original questions and an adjustment applied to make them comparable to the new questions. As such, figures prior to year ending March 2013 may differ to those previously published."""
@@ -162,7 +166,7 @@ catalog_metadata = scraper.as_csvqb_catalog_metadata()
 catalog_metadata.to_json_file('catalog-metadata.json')
 
 
-# In[18]:
+# In[27]:
 
 
 ###
