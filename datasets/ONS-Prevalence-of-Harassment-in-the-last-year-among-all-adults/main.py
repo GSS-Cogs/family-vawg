@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[91]:
+# In[1]:
 
 
 from gssutils import *
 from datetime import date
 
 
-# In[92]:
+# In[2]:
 
 
 def cell_to_string(cell):
@@ -32,14 +32,14 @@ months = {'January' : '01',
           'December' : '12'}
 
 
-# In[93]:
+# In[3]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[94]:
+# In[4]:
 
 
 for i in scraper.distributions:
@@ -47,7 +47,7 @@ for i in scraper.distributions:
     print(i.issued)
 
 
-# In[95]:
+# In[5]:
 
 
 tabs = { tab: tab for tab in scraper.distributions[0].as_databaker() if '3a' in tab.name}
@@ -55,7 +55,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[96]:
+# In[6]:
 
 
 tidied_sheets = []
@@ -102,7 +102,7 @@ for tab in tabs:
     tidied_sheets.append(tidy_sheet.topandas())
 
 
-# In[97]:
+# In[7]:
 
 
 df = pd.concat(tidied_sheets)
@@ -156,7 +156,7 @@ df['Age and sex'] = df['Age and sex'].str.split('aged', expand=True)[1]
 df['Age Group'] = df.apply(lambda x: x['Age and sex'] if x['Age Group'] == '' else x['Age Group'], axis = 1).fillna('')
 df['Age Group'] = df['Age Group'].str.strip()
 
-df['Measure Type'] = df.apply(lambda x: 'percentage' if '%' in x['Harassment'] else ('unweighted count' if 'number' in x['Harassment'] else ''), axis = 1)
+df['Measure Type'] = df.apply(lambda x: 'percentage' if '%' in x['Harassment'] else ('unweighted-count' if 'number' in x['Harassment'] else ''), axis = 1)
 df['Unit'] = df.apply(lambda x: 'percent' if '%' in x['Harassment'] else ('adult' if 'number' in x['Harassment'] else ''), axis = 1)
 
 df['Harassment'] = df['Harassment'].str.replace(r'\(.*\).*', '')
@@ -179,7 +179,7 @@ df = df.replace({'Region' : {'Great Britain' : 'K03000001',
                  'Harassment' : {'Unweighted base - number of adults' : 'All'},
                  'Marker' : {'' : 'N/A'},
                  'Change' : {'' : 'N/A'},
-                 'Sex' : {'ALL ADULTS' : 'All'}})
+                 'Sex' : {'ALL ADULTS' : 't', 'All' : 't', 'Men' : 'm', 'Women' : 'f'}})})
 
 df = df.drop(['Period Range', 'Age and sex'], axis = 1)
 
@@ -191,6 +191,8 @@ df = df.rename(columns={'Change' : 'Change Marker'})
 df = df.replace('', 'All')
 df = df.replace('N/A' , '')
 
+df['Age Group'] = df['Age Group'].apply(pathify)
+
 df = df[['Period', 'Region', 'Harassment', 'Sex', 'Age Group', 'Disability', 'Deprivation', 'Ethnic Group', 'Value', 'Marker', 'Change Marker', 'Measure Type', 'Unit']]
 
 df = df[df['Measure Type'].str.contains("All")==False]
@@ -198,7 +200,7 @@ df = df[df['Measure Type'].str.contains("All")==False]
 df
 
 
-# In[98]:
+# In[8]:
 
 
 from IPython.core.display import HTML
@@ -209,7 +211,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[99]:
+# In[9]:
 
 
 notes = """Please note percentages may not sum to 100% due to rounding. There are cases in which respondents do not answer a specific question. Where this happens, they have been excluded from the analysis. As a result, the unweighted bases for some categories may not sum to the total. Percentages may not sum to 100% as respondents could select multiple response options. [c] indicates where individual estimates have been suppressed on quality grounds and to avoid disclosure issues. Figures are based on a small number of respondents (< 3). [s] indicates there is a statistically significant change at the 5% level, [d]  a statistical decrease and [i] a statistical increase. [z] indicates not applicable as significant testing not possible. """

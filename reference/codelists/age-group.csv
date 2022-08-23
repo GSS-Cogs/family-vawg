@@ -1,3 +1,21 @@
 Label,Notation,Parent Notation,Sort Priority
 All,all,,0
 16 to 59,16-to-59,all,1
+16 to 34,16-to-34,,2
+35 to 44,35-to-44,,3
+45 to 54,45-to-54,,4
+55 to 64,55-to-64,,5
+65 to 74,65-to-74,,6
+75 and over,75-and-over,,7
+16 to 19,16-to-19,,8
+20 to 24,20-to-24,,9
+25 to 29,25-to-29,,10
+30 to 34,30-to-59,,11
+35 to 39,35-to-39,,12
+40 to 44,40-to-44,,13
+45 to 49,45-to-49,,14
+50 to 54,50-to-54,,15
+55 to 59,55-to-59,,16
+60 to 64,60-to-64,,17
+65 to 69,65-to-69,,18
+70 to 74,70-to-73,,19
