@@ -232,3 +232,5 @@ df.to_csv('observations.csv', index=False)
 catalog_metadata = scraper.as_csvqb_catalog_metadata()
 catalog_metadata.to_json_file('catalog-metadata.json')
 
+
+
