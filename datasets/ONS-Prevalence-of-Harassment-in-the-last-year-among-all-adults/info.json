@@ -22,6 +22,7 @@
         ],
         "airtable": "recMs1l8flUxUfkIU",
         "main_issue": 2,
+        "csvcubed_uri_style": "WithoutFileExtensions",
         "columns": {
             "Period": {
                 "type": "dimension",
@@ -70,12 +71,7 @@
             "Marker": {
                 "type": "attribute",
                 "uri": "http://purl.org/linked-data/sdmx/2009/attribute#obsStatus",
-                "value": "http://gss-data.org.uk/def/concept/cogs-markers/{+marker}{change_marker}"
-            },
-            "Change Marker": {
-                "type": "attribute",
-                "uri": "http://purl.org/linked-data/sdmx/2009/attribute#obsStatus",
-                "value": "http://gss-data.org.uk/def/concept/cogs-markers/{+marker}{change_marker}"
+                "value": "http://gss-data.org.uk/def/concept/cogs-markers/{+marker}"
             }
         }
     },

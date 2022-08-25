@@ -102,7 +102,7 @@ for tab in tabs:
     tidied_sheets.append(tidy_sheet.topandas())
 
 
-# In[7]:
+# In[16]:
 
 
 df = pd.concat(tidied_sheets)
@@ -202,14 +202,18 @@ df['Age Group'] = df['Age Group'].apply(pathify)
 
 df = df.rename(columns={'Change' : 'Change Marker'})
 
-df = df[['Period', 'Region', 'Harassment', 'Sex', 'Age Group', 'Disability', 'Deprivation', 'Ethnic Group', 'Value', 'Marker', 'Change Marker', 'Measure Type', 'Unit']]
+df['Marker'] = df['Marker'] + '-' + df['Change Marker']
+
+df = df.replace({'Marker' : {'N/A-N/A' : '', 'suppressed-N/A' : 'suppressed', 'significant-change-not-applicable' : 'not-applicable'}})
+
+df = df[['Period', 'Region', 'Harassment', 'Sex', 'Age Group', 'Disability', 'Deprivation', 'Ethnic Group', 'Value', 'Marker', 'Measure Type', 'Unit']]
 
 df = df[df['Measure Type'].str.contains("All")==False]
 
 df
 
 
-# In[8]:
+# In[17]:
 
 
 from IPython.core.display import HTML
@@ -231,6 +235,4 @@ df.to_csv('observations.csv', index=False)
 
 catalog_metadata = scraper.as_csvqb_catalog_metadata()
 catalog_metadata.to_json_file('catalog-metadata.json')
-
-
 
