@@ -117,7 +117,7 @@ for col in df:
 
 notes = """This question was asked of abuse experienced in the last 12 months. Due to changes in questionnaire structure, estimates on these questions are not comparable with data prior to year ending March 2011. Unweighted base refers to question on whether victim told someone known personally. Other bases are similar."""
 scraper.dataset.description = notes
-scraper.dataset.title = 'Contact after Abuse In Detail'
+scraper.dataset.title = 'Who victim had told personally about the partner abuse experienced in the last 12 months, by sex, year'
 
 df.to_csv('observations.csv', index=False)
 
