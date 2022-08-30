@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[17]:
+# In[1]:
 
 
 from gssutils import *
 
 
-# In[18]:
+# In[2]:
 
 
 scraper = Scraper(seed="info.json")
 scraper
 
 
-# In[19]:
+# In[3]:
 
 
 for i in scraper.distributions:
@@ -22,7 +22,7 @@ for i in scraper.distributions:
     print(i.issued)
 
 
-# In[20]:
+# In[4]:
 
 
 tabs = { tab: tab for tab in scraper.distributions[0].as_databaker() if tab.name in ['Table 12']}
@@ -31,7 +31,7 @@ for i in tabs:
     print(i.name)
 
 
-# In[21]:
+# In[5]:
 
 
 tidied_sheets = []
@@ -54,7 +54,7 @@ for tab in tabs:
 
     dimensions = [
         HDim(sex, 'Sex', CLOSEST, LEFT),
-        HDim(partner_abuse, 'Partner Abuse', DIRECTLY, LEFT),
+        HDim(partner_abuse, 'Contact after Abuse', DIRECTLY, LEFT),
         HDim(agegroup, 'Age Group', CLOSEST, ABOVE),
         HDimConst("Period", period)
         ]
@@ -69,7 +69,7 @@ for tab in tabs:
 df
 
 
-# In[28]:
+# In[6]:
 
 
 df = pd.concat(tidied_sheets)
@@ -78,7 +78,7 @@ df = df.rename(columns={'OBS' : 'Value'})
 
 loops = 0
 while loops < 3:
-    df['Partner Abuse'] = df.apply(lambda x: x['Partner Abuse'][:-1] if x['Partner Abuse'][-1:].isnumeric() else x['Partner Abuse'], axis = 1)
+    df['Contact after Abuse'] = df.apply(lambda x: x['Contact after Abuse'][:-1] if x['Contact after Abuse'][-1:].isnumeric() else x['Contact after Abuse'], axis = 1)
     loops += 1
 
 df['Age Group'] = df.apply(lambda x: ' '.join(x['Age Group'][:-1].split()[2:]) if len(x['Age Group'].split()[-1]) == 3 else ' '.join(x['Age Group'].split()[2:]), axis = 1)
@@ -86,22 +86,22 @@ df['Age Group'] = df.apply(lambda x: ' '.join(x['Age Group'][:-1].split()[2:]) i
 df['Measure Type'] = 'percentage'
 df['Unit'] = 'percent'
 
-df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults' in x['Partner Abuse'] else x['Measure Type'], axis = 1)
-df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Partner Abuse'] else x['Unit'], axis = 1)
+df['Measure Type'] = df.apply(lambda x: 'unweighted-count' if 'number of adults' in x['Contact after Abuse'] else x['Measure Type'], axis = 1)
+df['Unit'] = df.apply(lambda x: 'adult' if 'number of adults' in x['Contact after Abuse'] else x['Unit'], axis = 1)
 
-df = df.replace({'Partner Abuse' : {'Unweighted base - number of adults' : 'All'},
+df = df.replace({'Contact after Abuse' : {'Unweighted base - number of adults' : 'All'},
                  'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'}})
 
 df['Age Group'] = df['Age Group'].apply(pathify)
 
 df['Region'] = 'K04000001'
 
-df = df[['Period', 'Region', 'Sex', 'Age Group', 'Partner Abuse', 'Value', 'Measure Type', 'Unit']]
+df = df[['Period', 'Region', 'Sex', 'Age Group', 'Contact after Abuse', 'Value', 'Measure Type', 'Unit']]
 
 df
 
 
-# In[23]:
+# In[7]:
 
 
 from IPython.core.display import HTML
@@ -112,12 +112,12 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[24]:
+# In[8]:
 
 
 notes = """This question was asked of abuse experienced in the last 12 months. Due to changes in questionnaire structure, estimates on these questions are not comparable with data prior to year ending March 2011. Unweighted base refers to question on whether victim told someone known personally. Other bases are similar."""
 scraper.dataset.description = notes
-scraper.dataset.title = 'Partner Abuse In Detail'
+scraper.dataset.title = 'Contact after Abuse In Detail'
 
 df.to_csv('observations.csv', index=False)
 
