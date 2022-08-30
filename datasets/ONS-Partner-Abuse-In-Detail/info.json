@@ -36,7 +36,7 @@
                 "uri": "http://purl.org/linked-data/sdmx/2009/dimension#refArea",
                 "value": "http://statistics.data.gov.uk/id/statistical-geography/{region}"
             },
-            "Partner Abuse": {
+            "Contact after Abuse": {
                 "type": "dimension"
             },
             "Sex": {
