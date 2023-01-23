@@ -69,14 +69,6 @@ for tab in tabs:
     for word, number in months.items():
         period = period.replace(word, number)
 
-    periodRange = period.split()
-
-    periodRange = [int(i) for i in periodRange if i.isnumeric() == True]
-
-    a = date(periodRange[4],periodRange[1],periodRange[0])
-    b = date(periodRange[4],periodRange[3],periodRange[2])
-
-    periodRange = -(a-b).days
 
     harassment = pivot.fill(RIGHT).is_not_blank()
 
@@ -90,7 +82,6 @@ for tab in tabs:
 
     dimensions = [
         HDimConst('Period', period),
-        HDimConst('Period Range', periodRange),
         HDim(harassment, 'Harassment', DIRECTLY, ABOVE),
         HDim(characteristic, 'Characteristic', DIRECTLY, LEFT),
         HDim(char, 'Char', CLOSEST, ABOVE),
@@ -102,7 +93,7 @@ for tab in tabs:
     tidied_sheets.append(tidy_sheet.topandas())
 
 
-# In[16]:
+# In[8]:
 
 
 df = pd.concat(tidied_sheets)
@@ -145,7 +136,7 @@ df['Region'] = df.apply(lambda x: x['Period'].split(',')[0] if x['Region'] == ''
 
 df['Period'] = df['Period'].str.split(',', expand=True)[1].str.strip()
 
-df['Period'] = df.apply(lambda x: 'gregorian-interval/' + x['Period'].split()[5] + '-' + x['Period'].split()[1] + '-' + x['Period'].split()[0] + 'T00:00:00/P' + str(x['Period Range']) + 'D', axis = 1)
+df['Period'] = df.apply(lambda x: 'gregorian-interval/' + x['Period'].split()[5] + '-' + x['Period'].split()[1] + '-' + x['Period'].split()[0] + 'T00:00:00/P1Y', axis = 1)
 
 df = df.rename(columns={'OBS' : 'Value', 'DATAMARKER' : 'Marker', 'ALL ADULTS' : 'Sex', 'Deprivation [note 6]' : 'Deprivation', 'Age group' : 'Age Group', 'Ethnic group' : 'Ethnic Group'})
 
@@ -164,7 +155,7 @@ df['Harassment'] = df['Harassment'].str.replace('\n', '')
 df['Harassment'] = df['Harassment'].str.replace(r'\[.*\].*', '')
 df['Harassment'] = df['Harassment'].str.strip()
 
-df = df.drop(['Period Range', 'Age and sex'], axis = 1)
+df = df.drop(['Age and sex'], axis = 1)
 
 df['Value'] = df.apply(lambda x: 0 if '[c]' in x['Marker'] else x['Value'], axis = 1)
 df['Marker'] = df.apply(lambda x: '[s]' if '[' in x['Change'] else x['Marker'], axis = 1)
@@ -213,7 +204,7 @@ df = df[df['Measure Type'].str.contains("All")==False]
 df
 
 
-# In[17]:
+# In[9]:
 
 
 from IPython.core.display import HTML
@@ -224,7 +215,7 @@ for col in df:
         display(df[col].cat.categories)
 
 
-# In[9]:
+# In[10]:
 
 
 notes = """Please note percentages may not sum to 100% due to rounding. There are cases in which respondents do not answer a specific question. Where this happens, they have been excluded from the analysis. As a result, the unweighted bases for some categories may not sum to the total. Percentages may not sum to 100% as respondents could select multiple response options. [c] indicates where individual estimates have been suppressed on quality grounds and to avoid disclosure issues. Figures are based on a small number of respondents (< 3). [s] indicates there is a statistically significant change at the 5% level, [d]  a statistical decrease and [i] a statistical increase. [z] indicates not applicable as significant testing not possible. """
