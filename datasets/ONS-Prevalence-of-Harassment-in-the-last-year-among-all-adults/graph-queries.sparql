@@ -1,0 +1,164 @@
+# Percentage of adults aged 16 and over, that have experienced any type of harassment in the last 12 months, Great Britain
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX data:<http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dataset>
+PREFIX hr: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/harassment>
+PREFIX eg: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/ethnic-group>
+PREFIX dis: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/disability>
+PREFIX dep: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/deprivation>
+PREFIX area: <http://purl.org/linked-data/sdmx/2009/dimension#refArea>
+PREFIX res: <http://gss-data.org.uk/def/vawg/property/dimension/sex>
+PREFIX age: <http://gss-data.org.uk/def/vawg/property/dimension/age-group>
+PREFIX measure: <http://gss-data.org.uk/def/measure/percentage>
+SELECT DISTINCT ?sex ?percentage
+WHERE {
+       ?obs qb:dataSet data: . 
+       ?obs hr: [ rdfs:label ?harassment] .
+	   ?obs eg: [ rdfs:label ?ethnic_group] .
+	   ?obs dis: [ rdfs:label ?disability] .
+       ?obs res: [ rdfs:label ?sex ] .
+       ?obs dep: [ rdfs:label ?deprivation ] .
+       ?obs area: [ rdfs:label ?region ] .
+       ?obs measure: ?percentage .
+	   ?obs age: [ rdfs:label ?age_group ] .        
+FILTER (?age_group = 'All' && 
+        ?ethnic_group = 'All' && 
+        ?disability = 'All' && 
+        ?deprivation = 'All' &&
+        ?region = 'K03000001' )    
+	   } 
+ORDER BY ?harassment ?sex
+
+# Percentage of adults aged 16 and over, that have experienced being insulted or shouted at by a stranger in public in the past 12 months, Great Britain
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX data:<http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dataset>
+PREFIX hr: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/harassment>
+PREFIX eg: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/ethnic-group>
+PREFIX dis: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/disability>
+PREFIX dep: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/deprivation>
+PREFIX area: <http://purl.org/linked-data/sdmx/2009/dimension#refArea>
+PREFIX res: <http://gss-data.org.uk/def/vawg/property/dimension/sex>
+PREFIX age: <http://gss-data.org.uk/def/vawg/property/dimension/age-group>
+PREFIX measure: <http://gss-data.org.uk/def/measure/percentage>
+SELECT DISTINCT ?sex ?age_group ?percentage
+WHERE {
+       ?obs qb:dataSet data: . 
+       ?obs hr: [ rdfs:label ?harassment] .
+	   ?obs eg: [ rdfs:label ?ethnic_group] .
+	   ?obs dis: [ rdfs:label ?disability] .
+       ?obs res: [ rdfs:label ?sex ] .
+       ?obs dep: [ rdfs:label ?deprivation ] .
+       ?obs area: [ rdfs:label ?region ] .
+       ?obs measure: ?percentage .
+	   ?obs age: [ rdfs:label ?age_group ] .        
+FILTER (?ethnic_group = 'All' && 
+        ?disability = 'All' && 
+        ?deprivation = 'All' &&
+        ?region = 'K03000001' &&
+        ?harassment = 'Being insulted or shouted at by a stranger in public')    
+	   } 
+ORDER BY ?harassment ?age_group
+
+# Percentage of adults aged 16 and over, that have experienced catcalls, whistles, unwanted sexual comments or jokes from a stranger in a public place in the past 12 months, Great Britain
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX data:<http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dataset>
+PREFIX hr: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/harassment>
+PREFIX eg: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/ethnic-group>
+PREFIX dis: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/disability>
+PREFIX dep: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/deprivation>
+PREFIX area: <http://purl.org/linked-data/sdmx/2009/dimension#refArea>
+PREFIX res: <http://gss-data.org.uk/def/vawg/property/dimension/sex>
+PREFIX age: <http://gss-data.org.uk/def/vawg/property/dimension/age-group>
+PREFIX measure: <http://gss-data.org.uk/def/measure/percentage>
+SELECT DISTINCT ?sex ?age_group ?percentage
+WHERE {
+       ?obs qb:dataSet data: . 
+       ?obs hr: [ rdfs:label ?harassment] .
+	   ?obs eg: [ rdfs:label ?ethnic_group] .
+	   ?obs dis: [ rdfs:label ?disability] .
+       ?obs res: [ rdfs:label ?sex ] .
+       ?obs dep: [ rdfs:label ?deprivation ] .
+       ?obs area: [ rdfs:label ?region ] .
+       ?obs measure: ?percentage .
+	   ?obs age: [ rdfs:label ?age_group ] .        
+FILTER (?ethnic_group = 'All' && 
+        ?disability = 'All' && 
+        ?deprivation = 'All' &&
+        ?region = 'K03000001' &&
+        ?harassment = 'Experienced catcalls, whistles, unwanted sexual comments or jokes from a stranger in a public place')    
+	   } 
+ORDER BY ?harassment ?age_group
+
+# Percentage of adults aged 16 and over, that have felt physically threatened by a stranger in a public space in the last 12 months, Great Britain
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX data:<http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dataset>
+PREFIX hr: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/harassment>
+PREFIX eg: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/ethnic-group>
+PREFIX dis: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/disability>
+PREFIX dep: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/deprivation>
+PREFIX area: <http://purl.org/linked-data/sdmx/2009/dimension#refArea>
+PREFIX res: <http://gss-data.org.uk/def/vawg/property/dimension/sex>
+PREFIX age: <http://gss-data.org.uk/def/vawg/property/dimension/age-group>
+PREFIX measure: <http://gss-data.org.uk/def/measure/percentage>
+SELECT DISTINCT ?sex ?age_group ?percentage
+WHERE {
+       ?obs qb:dataSet data: . 
+       ?obs hr: [ rdfs:label ?harassment] .
+	   ?obs eg: [ rdfs:label ?ethnic_group] .
+	   ?obs dis: [ rdfs:label ?disability] .
+       ?obs res: [ rdfs:label ?sex ] .
+       ?obs dep: [ rdfs:label ?deprivation ] .
+       ?obs area: [ rdfs:label ?region ] .
+       ?obs measure: ?percentage .
+	   ?obs age: [ rdfs:label ?age_group ] .        
+FILTER (?ethnic_group = 'All' && 
+        ?disability = 'All' && 
+        ?deprivation = 'All' &&
+        ?region = 'K03000001' &&
+        ?harassment = 'Felt physically threatened by a stranger in a public space')    
+	   } 
+ORDER BY ?harassment ?age_group
+
+# Percentage of adults aged 16 and over, that have felt that they have been followed in the last 12 months, Great Britain
+
+PREFIX qb: <http://purl.org/linked-data/cube#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX data:<http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dataset>
+PREFIX hr: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/harassment>
+PREFIX eg: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/ethnic-group>
+PREFIX dis: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/disability>
+PREFIX dep: <http://gss-data.org.uk/data/vawg/ons-prevalence-of-harassment-in-the-last-year-among-all-adults/prevalence-of-harassment-in-the-last-year-among-all-adults#dimension/deprivation>
+PREFIX area: <http://purl.org/linked-data/sdmx/2009/dimension#refArea>
+PREFIX res: <http://gss-data.org.uk/def/vawg/property/dimension/sex>
+PREFIX age: <http://gss-data.org.uk/def/vawg/property/dimension/age-group>
+PREFIX measure: <http://gss-data.org.uk/def/measure/percentage>
+SELECT DISTINCT ?sex ?age_group ?percentage
+WHERE {
+       ?obs qb:dataSet data: . 
+       ?obs hr: [ rdfs:label ?harassment] .
+	   ?obs eg: [ rdfs:label ?ethnic_group] .
+	   ?obs dis: [ rdfs:label ?disability] .
+       ?obs res: [ rdfs:label ?sex ] .
+       ?obs dep: [ rdfs:label ?deprivation ] .
+       ?obs area: [ rdfs:label ?region ] .
+       ?obs measure: ?percentage .
+	   ?obs age: [ rdfs:label ?age_group ] .        
+FILTER (?ethnic_group = 'All' && 
+        ?disability = 'All' && 
+        ?deprivation = 'All' &&
+        ?region = 'K03000001' &&
+        ?harassment = 'Felt that you were being followed')    
+	   } 
+ORDER BY ?harassment ?age_group
