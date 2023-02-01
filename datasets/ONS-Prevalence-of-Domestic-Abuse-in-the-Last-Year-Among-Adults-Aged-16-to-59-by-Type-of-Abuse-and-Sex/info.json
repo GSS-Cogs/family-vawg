@@ -22,6 +22,7 @@
         ],
         "airtable": "recbaH351X9jfKONd",
         "main_issue": 3,
+        "csvcubed_uri_style": "WithoutFileExtensions",
         "columns": {
             "Period": {
                 "type": "dimension",
