@@ -47,10 +47,10 @@
                 "uri": "http://gss-data.org.uk/def/vawg/property/dimension/age-group",
                 "value": "http://gss-data.org.uk/def/vawg/concept/age-group/{+age_group}"
             },
-            "Domestic Abuse Category": {
+            "Abuse Category": {
                 "type": "dimension"
             },
-            "Type of Domestic Abuse": {
+            "Type of Abuse": {
                 "type": "dimension"
             },
             "Value": {
