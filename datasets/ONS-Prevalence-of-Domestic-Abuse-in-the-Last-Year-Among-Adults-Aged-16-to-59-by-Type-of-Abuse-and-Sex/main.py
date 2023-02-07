@@ -89,7 +89,7 @@ for tab in tabs:
 df
 
 
-# In[68]:
+# In[83]:
 
 
 import re
@@ -111,8 +111,13 @@ df['Period'] = df.apply(lambda x: 'government-year/' + str(x['Period'])[4:8] + '
 df['Measure Type'] = 'percentage'
 df['Unit'] = 'percent'
 
+df['Abuse Category'] = df['Abuse Category'].str.strip().str.replace('  ' , ' ')
+
+df['Type of Abuse'] = df['Type of Abuse'].str.strip().str.replace('  ' , ' ')
+
 df = df.replace({'Sex' : {'All' : 't', 'Men' : 'm', 'Women' : 'f'},
-                'Type of Abuse' : {'Unweighted base - number of adults' : 'All'},
+                'Type of Abuse' : {'Unweighted base - number of adults' : 'All',
+                                   'Sexual assault by rape or penetration  by a partner' : 'Sexual assault by rape or penetration by a partner'},
                 'DATAMARKER' : {'[x]' : 'not-available',
                                 '[c]' : 'suppressed',
                                 '[z]' : 'not-applicable'}})
@@ -134,7 +139,7 @@ df['Value'] = df['Value'].round(1)
 df
 
 
-# In[69]:
+# In[84]:
 
 
 from IPython.core.display import HTML
