@@ -126,7 +126,7 @@ df = df.rename(columns={'DATAMARKER' : 'Marker', 'OBS' : 'Value'})
 
 df['Type of Abuse'] = df.apply(lambda x: 'all' if x['Type of Abuse'] == x['Abuse Category'] else x['Type of Abuse'], axis = 1)
 
-df['Age Group'] = '16 to 59'
+df['Age Group'] = '16-to-59'
 
 df['Region'] = 'K04000001'
 
